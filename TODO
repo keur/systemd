@@ -48,7 +48,6 @@ Features:
   with matches, then actviate app thorugh that passing socket oveer
 
 * unify on openssl:
-  - port sd_id128_get_machine_app_specific() over from khash
   - port resolved over from libgcrypt (DNSSEC code)
   - port journald + fsprg over from libgcrypt
   - port importd over from libgcrypt
