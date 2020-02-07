@@ -5,6 +5,7 @@
 
 #if HAVE_OPENSSL
 
+#include <openssl/evp.h>
 #include <openssl/hmac.h>
 #include <openssl/pem.h>
 
@@ -38,6 +39,25 @@ static inline int hmac_sha256(
                 unsigned int *md_len) {
 #if HAVE_OPENSSL
         return hmac(EVP_sha256(), key, key_len, msg, msg_len, md, md_len);
+#else
+        return -EOPNOTSUPP;
+#endif
+}
+
+int sha(
+        const EVP_MD *alg,
+        const void *msg,
+        size_t msg_len,
+        uint8_t *md,
+        unsigned int *md_len);
+
+static inline int sha256(
+                const void *msg,
+                uint8_t msg_len,
+                uint8_t *md,
+                unsigned int *md_len) {
+#if HAVE_OPENSSL
+        return sha(EVP_sha256(), msg, msg_len, md, md_len);
 #else
         return -EOPNOTSUPP;
 #endif
